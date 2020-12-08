@@ -9,17 +9,15 @@ namespace LoadSim
 {
     class Program
     {
-        private static string hubConnection = "Endpoint=sb://telemetryehns-serverless-demo.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=0af6wN2PV8sXKZc1xyCyVgwEerCQZoXEKgil2xi7KQE=";
-        private static string ehName = "telemetryhub";
+        private static string hubConnection = Environment.GetEnvironmentVariable("ConnectionString");
+        private static string ehName = Environment.GetEnvironmentVariable("EHName");
 
-        private static Random random;
+        private static Random random = new Random();
 
-        private static double simulatedSpeed = 0.0;
+        private static double simulatedSpeed = 50;
 
         static async Task Main(string[] args)
         {
-            simulatedSpeed += GetRandom(-0.2, 0.2);
-            
             await using (var client = new EventHubProducerClient(hubConnection, ehName))
             {
                 using EventDataBatch eventBatch = await client.CreateBatchAsync();
@@ -28,6 +26,8 @@ namespace LoadSim
                     int i = 1;
                     while (i > 0)
                     {
+                        simulatedSpeed += GetRandom(-0.2, 0.2);
+                        Console.WriteLine(simulatedSpeed);
                         var payload = new {
                             speed = simulatedSpeed
                         };
