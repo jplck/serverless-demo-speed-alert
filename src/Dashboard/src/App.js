@@ -38,6 +38,13 @@ class App extends React.Component
         this.setState({
           websocket: hubConnectionRef
         })
+      ).then(
+        hubConnectionRef.on('alerts', (alert) => {
+          var alertJson = JSON.parse(alert)
+          this.setState({
+              alert: alertJson
+          })
+        })
       )
     }
   }
