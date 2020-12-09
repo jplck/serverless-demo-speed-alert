@@ -22,7 +22,7 @@ steps:
     cd ./src/Dashboard
     npm install
     npm run build
-    zip -r '$(Build.ArtifactStagingDirectory)/package.zip' ./build
+    zip -r '$(Build.ArtifactStagingDirectory)/package.zip' ./build/*
   displayName: 'npm install, build and zip'
 
 - task: AzureRmWebAppDeployment@4
