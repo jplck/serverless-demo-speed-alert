@@ -26,7 +26,7 @@ steps:
 
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: './src/Dashboard/build/*'
+    rootFolderOrFile: './build/*'
     includeRootFolder: false
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/package.zip'
